@@ -77,7 +77,7 @@ Sintaxe: var nome_variavel = document.querySelector("tag");
 ### Esta função pode ser nomeda ou anônima
 - função nomeada é aquela criada em scopo global
 - função anônima, é a criada junto ao scopo do evento:
-    - Exemplo: .addEventListener("click", function nomefuncao(){});
+    - Exemplo: .addEventListener("click", function(){});
 
 ### event.preventDefault()
 - Botões de enviar dentro de formulários, por padrão recaregão a página ao acionar o evento;
