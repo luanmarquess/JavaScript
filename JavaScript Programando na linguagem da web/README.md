@@ -89,47 +89,55 @@ Sintaxe: var nome_variavel = document.querySelector("tag");
     - Criar um id para form;
     - Vincular a form a uma variável no js: var nomevar = document.querySelector("#id_da_form");
     - No html, criar um name para cada input:
-
-        - ex: 
-        - 	<form id="addrow">
-		-		<div class="grupo">
-		-			<label for="nome">Nome:</label>
-		-			<input id="nome" name="nome" type="text" placeholder="digite o nome do seu paciente" class="campo">
-		-		</div>
-		-		<div class="grupo">
-		-			<label for="peso">Peso:</label>
-		-			<input id="peso" name="peso" type="text" placeholder="digite o peso do seu paciente" class="campo campo-medio">
-		-		</div>
-    - Acessar o valor de cada input através da variável que foi agragada a form:
-        - form.name.value;
-    - Criar uma variável que receba o valor do input:
-        - var recebeNome = form.name.value;
-
+     - ex:
+~~~ html 
+      <form id="addrow">
+	<div class="grupo">
+		<label for="nome">Nome:</label>
+		<input id="nome" name="nome" type="text" placeholder="digite o nome do seu paciente" class="campo">
+	</div>
+	<div class="grupo">
+		<label for="peso">Peso:</label>
+		<input id="peso" name="peso" type="text" placeholder="digite o peso do seu paciente" class="campo campo-medio">
+	</div>
+~~~
+- Acessar o valor de cada input através da variável que foi agragada a form:
+~~~ JavaScript
+    form.name.value;
+~~~ 
+    
+- Criar uma variável que receba o valor do input:
+~~~ JavaScript
+    var recebeNome = form.name.value;
+~~~
+    
 ## createElement
 - Cria um elemento no HTML. Ex: Usando caso queira criar uma linha em uma tabela, com novos dados inseridos pelo usuário;
 
 ## appendChild()
 - push textContent como filho da tag referênciada;
 - Ex: 
-    - var form = document.querySelector("#addrow");
-    -    var nome = form.nome.value;
-    -   var peso = form.peso.value;
-    -   var altura = form.altura.value;
-    -   var gordura = form.gordura.value
+~~~ JavaScript
+    var form = document.querySelector("#addrow");
+    var nome = form.nome.value;
+    var peso = form.peso.value;
+    var altura = form.altura.value;
+    var gordura = form.gordura.value
 
-    -   var pacienteTr = document.createElement("tr");
-    -   var nomeTd = document.createElement("td");
-    -   var pesoTd = document.createElement("td");
-    -   var alturaTd = document.createElement("td");
-    -   var gorduraTd = document.createElement("td");
+    var pacienteTr = document.createElement("tr");
+    var nomeTd = document.createElement("td");
+    var pesoTd = document.createElement("td");
+    var alturaTd = document.createElement("td");
+    var gorduraTd = document.createElement("td");
 
-    -   nomeTd.textContent = nome;
-    -   pesoTd.textContent = peso;
-    -   altura.textContent = altura;
-    -   gordura.textContent = gordura;
+    nomeTd.textContent = nome;
+    pesoTd.textContent = peso;
+    altura.textContent = altura;
+    gordura.textContent = gordura;
         
-    -   pacienteTr.appendChild(nomeTd);
-    -   pacienteTr.appendChild(pesoTd);
-    -   pacienteTr.appendChild(alturaTd);
-    -   pacienteTr.appendChild(gorduraTd);
+    pacienteTr.appendChild(nomeTd);
+    pacienteTr.appendChild(pesoTd);
+    pacienteTr.appendChild(alturaTd);
+    pacienteTr.appendChild(gorduraTd);
 
+~~~
