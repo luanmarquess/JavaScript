@@ -90,8 +90,8 @@ Sintaxe: var nome_variavel = document.querySelector("tag");
     - Vincular a form a uma variável no js: var nomevar = document.querySelector("#id_da_form");
     - No html, criar um name para cada input:
      - ex:
-~~~ html 
-      <form id="addrow">
+~~~ HTML
+<form id="addrow">
 	<div class="grupo">
 		<label for="nome">Nome:</label>
 		<input id="nome" name="nome" type="text" placeholder="digite o nome do seu paciente" class="campo">
@@ -118,26 +118,192 @@ Sintaxe: var nome_variavel = document.querySelector("tag");
 - push textContent como filho da tag referênciada;
 - Ex: 
 ~~~ JavaScript
-    var form = document.querySelector("#addrow");
-    var nome = form.nome.value;
-    var peso = form.peso.value;
-    var altura = form.altura.value;
-    var gordura = form.gordura.value
+var form = document.querySelector("#addrow");
+var nome = form.nome.value;
+var peso = form.peso.value;
+var altura = form.altura.value;
+var gordura = form.gordura.value
 
-    var pacienteTr = document.createElement("tr");
-    var nomeTd = document.createElement("td");
-    var pesoTd = document.createElement("td");
-    var alturaTd = document.createElement("td");
-    var gorduraTd = document.createElement("td");
+var pacienteTr = document.createElement("tr");
+var nomeTd = document.createElement("td");
+var pesoTd = document.createElement("td");
+var alturaTd = document.createElement("td");
+var gorduraTd = document.createElement("td");
 
-    nomeTd.textContent = nome;
-    pesoTd.textContent = peso;
-    altura.textContent = altura;
-    gordura.textContent = gordura;
+nomeTd.textContent = nome;
+pesoTd.textContent = peso;
+altura.textContent = altura;
+gordura.textContent = gordura;
         
-    pacienteTr.appendChild(nomeTd);
-    pacienteTr.appendChild(pesoTd);
-    pacienteTr.appendChild(alturaTd);
-    pacienteTr.appendChild(gorduraTd);
+pacienteTr.appendChild(nomeTd);
+pacienteTr.appendChild(pesoTd);
+pacienteTr.appendChild(alturaTd);
+pacienteTr.appendChild(gorduraTd);
 
+~~~
+
+## Boa Prática
+- Criar arquivos separados para cada funcionalidade da aplicação. Isso facilita a manutenção do código;
+- Criar functions para funcionalidades usadas em mais de uma função da aplicação;
+
+## Objetos
+- Representações do mundo real que possuem características em comum;
+- Sintaxe:
+~~~ JavaScript
+var paciente = {
+    nome:form.nome.value,
+    peso:form.peso.value,
+    altura:form.altura.value,
+    gordura:form.gordura.value,  
+    imc: calculaImc(form.peso.value, form.altura.value)
+    }
+~~~
+
+## Adicionar classes
+~~~ JavaScript
+pacienteTr.classList.add("paciente")
+//Nome variável + .classList + .add + ("nome da classe");
+~~~
+
+## reset()
+- limpa os campos de uma form
+
+## If simples
+-  Quanto tivermos um if simple (se x acontecer faça tal coisa), não precisamos descreve-lo em um bloco;
+~~~ JavaScript
+if(!validaPeso(paciente.peso)) erro.push("O peso é inválido");
+
+if (!validaAltura(paciente.altura)) erro.push("A altura é inválida");
+~~~
+
+## forEach();
+- Forma enxuta do for();
+~~~ JavaScript
+erros.forEach(function(erro){
+var li = document.createElement("li");
+li.textContent = erro;
+ ul.appendChild(li);
+    })
+~~~
+
+## innerHTML
+- Sobrescreve algum objeto;
+~~~ JavaScript
+    ul.innerHTML = "";
+~~~
+
+## dblclick
+- Evendo de duplo click;
+~~~ JavaScript
+pacientes.forEach(function(paciente){
+paciente.addEventListener("dblclick", function(){
+    this.remove();
+})
+~~~
+
+## this.
+- Dono do evento;
+- Palavra reservada para quem acionou o envento;
+~~~ JavaScript
+      this.remove();
+~~~
+
+## addEventListener
+- Eventos são escutados por todos objetos com grau de hierarquia superior ao que listener está vinculado;
+
+## event.target
+- Informa o objeto que sofre algum evento;
+- Mais específico;
+
+## .parentNode
+- seleciona o pai do elemento informado.
+~~~ JavaScript
+var alvoEvento = event.target; // TD
+var paiDoAlvo = alvoEvento.parentNode; // TR
+~~~
+## .remove()
+- Remove o objeto informado;
+~~~ Java Script
+var tabela = document.querySelector("table");
+
+tabela.addEventListener("dblclick",function(event){
+    var alvoEvento = event.target; // TD
+    var paiDoAlvo = alvoEvento.parentNode; // TR
+    
+    paiDoAlvo.remove();  
+});
+~~~
+
+## setTimeout()
+- Set um tempo para a execução de alguma bloco;
+~~~ JavaScript
+setTimeout(function(){
+
+    paiDoAlvo.remove();
+
+},500); // Tempo para execução do bloco em ms;
+~~~
+
+
+## Criando input e Estilizando o campo para filtro
+- HTML
+~~~ HTML
+<label for="filtrar-tabela">Filter:</label>
+<input type="text" name="filtro" id="filtrar-tabela" placeholder="Digite o nome do paciente">
+~~~
+- CSS
+~~~ CSS
+#filtrar-tabela{
+	width: 200px;
+	height: 35px;
+	margin-bottom: 10px;
+}
+~~~
+
+## input
+- Escuta o evento de digitação;
+~~~ JavaScript
+var campoFiltro = document.querySelector("#filtrar-tabela");
+
+campoFiltro.addEventListener("input",function(){
+     console.log(this.value);
+})
+~~~ 
+
+## Expressões regulares 
+- Busca por letras
+~~~ JavaScript
+var expressao = new RegExp(this.value, "i");
+// variável = expressão regular (o que buscar, como buscar);
+// "i" == caseInsensitive
+~~~
+
+- Exemplo no filtro de busca:
+~~~ Java Script
+    var campoFiltro = document.querySelector("#filtrar-tabela");
+
+campoFiltro.addEventListener("input", function(){
+    console.log(this.value);
+    var pacientes = document.querySelectorAll(".paciente");
+
+    if (this.value.length > 0){
+        for (var i = 0; i < pacientes.length; i++){
+            var paciente = pacientes[i];
+            var tdNome = paciente.querySelector(".info-nome");
+            var nome = tdNome.textContent;
+            var expressao = new RegExp(this.value, "i");
+            if (!expressao.test(nome)){// testa se o valor atribuido a expressao é diferente da contida na variável nome
+                paciente.classList.add("invisivel");
+            } else {
+                paciente.classList.remove("invisivel");
+            }
+        }
+    } else {
+// mostrar todos elementos da tabela ao apagar o filtro
+        for (var i = 0; i < pacientes.length; i++) {
+            var paciente = pacientes[i];
+            paciente.classList.remove("invisivel");
+        }
+    }
+});
 ~~~
