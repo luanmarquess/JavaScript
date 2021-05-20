@@ -16,9 +16,9 @@ var botaoAdicionar = document.querySelector("#adicionar-paciente");
     }
 
     // Adicionando o paciente na tabela
-    var tabela = document.querySelector("#tabela-pacientes");
     
-    tabela.appendChild(pacienteTr);
+    adicionaPacienteNaTabela(paciente);
+   
 
     form.reset();
 
@@ -27,7 +27,17 @@ var botaoAdicionar = document.querySelector("#adicionar-paciente");
     mensagensErro.innerHTML = "";
  
 });
-// Caao haja erros
+
+function adicionaPacienteNaTabela(paciente){
+    var pacienteTr = montaTr(paciente);
+    // armazena a linha monstada
+    var tabela = document.querySelector("#tabela-pacientes");
+    // armazena a tabela principal
+    tabela.appendChild(pacienteTr);
+    // adiciona a linha criada como filho da tabela principal;
+}
+
+// Caso haja erros
 function exibeMensagensDeErro(erros){
     var ul = document.querySelector("#mensagens-erro");
     ul.innerHTML = "";
@@ -53,6 +63,10 @@ function valoresInputNovaLinha(form){
 }
 
 function montaTr(paciente){
+// cria uma linha/
+// atribui uma classe;
+// atribui uma td como filho da tr criada, passando classe do objeto;
+// retorna a tr com suas respectivas td's.
     
     var pacienteTr = document.createElement("tr");
     pacienteTr.classList.add("paciente");

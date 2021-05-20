@@ -307,3 +307,115 @@ campoFiltro.addEventListener("input", function(){
     }
 });
 ~~~
+
+# Buscar dados com JS
+
+## API
+- Interface de programação para disponibilização de dados;
+- Disponibilização de funcionalidades/dados;
+
+
+## XMLHttpRequest()
+- Objeto responsável por fazer requisições http;
+
+~~~ JavaScript
+var botaoAdicionar = document.querySelector("#buscar-pacientes"); // vincula o botão do html
+
+botaoAdicionar.addEventListener("click", function(){ // atribui uma função ao click
+    console.log("Bucando-pacientes") // teste
+
+    var xhr = new XMLHttpRequest(); // atribui o código da requisição a variável xhr
+~~~
+
+## .open("tipo", "endereço")
+- Abre a conexão, informando o tipo de requisição e o endereço para buscar os dados;
+~~~ JavaScript
+xhr.open("get",  "https://api-pacientes.herokuapp.com/pacientes")
+//  open == abre a conexão
+// tipo de requisição == get
+// onde == endereço
+~~~
+
+## . send()
+- Acessa os dados no endereço da api informada;
+~~~ JavaScript
+xhr.send();
+// envia a requisição. "acessa os dados disponíveis no endereço informado"
+~~~
+
+## .addEventListener("tipo", função(){});
+- Escuta o tipo de evento informado e executa o bloco da função;
+~~~ JavaScript
+xhr.addEventListener("load", function(){
+    // quando carregar a url, executa uma função
+~~~
+
+## .responseText
+- Imprime os dados recebidos da api;
+~~~ JavaScript
+    console.log(xhr.responseText);
+    // xhr.responseText imprime o que encontrou na api
+    });
+~~~
+
+## AJAX
+- Fazer requisições com o JS de modo assíncrono, ou seja, sem travar o js para buscar informações; 
+
+# JSON -> JS Objeto
+
+## JSON.parse()
+- formato json recebido na api, transformando ele para um array;
+~~~ JavaScript
+var pacientes = JSON.parse(resposta);
+// atribui a variável pacientes um o json pego na api, transformando ele para um array
+~~~
+- Varre o array, tratando e incluindo um objeto por vez;
+~~~ JavaScript
+   pacientes.forEach( function(paciente){
+    // for para separar cada objeto;
+        adicionaPacienteNaTabela(paciente);
+    // função de tratamento de dados de um array para construção da tabela
+~~~
+~~~ JavaScript
+function adicionaPacienteNaTabela(paciente){
+    var pacienteTr = montaTr(paciente);
+    // armazena a linha monstada
+    var tabela = document.querySelector("#tabela-pacientes");
+    // armazena a tabela principal
+    tabela.appendChild(pacienteTr);
+    // adiciona a linha criada como filho da tabela principal;
+}
+~~~
+~~~ JavaScript
+function montaTr(paciente){
+// cria uma linha/
+// atribui uma classe;
+// atribui uma td como filho da tr criada, passando classe do objeto;
+// retorna a tr com suas respectivas td's.
+    
+    var pacienteTr = document.createElement("tr");
+    pacienteTr.classList.add("paciente");
+
+    pacienteTr.appendChild(montaTd(paciente.nome, "info-nome"));
+    pacienteTr.appendChild(montaTd(paciente.peso, "info-peso"));
+    pacienteTr.appendChild(montaTd(paciente.altura, "info-altura"));
+    pacienteTr.appendChild(montaTd(paciente.gordura, "info-gordura"));
+    pacienteTr.appendChild(montaTd(paciente.imc, "info-imc"));
+
+    return pacienteTr;
+}
+~~~
+
+# Tratando erros
+
+## xhr.status 
+- checa o status da requisição http;
+~~~ JavaScript
+if(xhr.status == 200){
+// se o status == 200 ou seja, obteve êxito
+ }else{
+        console.log(xhr.status);
+        // exibe o status (404...)
+        console.log(xhr.responseText);
+        // exibe o erro
+    }
