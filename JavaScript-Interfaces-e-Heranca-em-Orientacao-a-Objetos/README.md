@@ -7,5 +7,4 @@
 - Polimorfismo (trata,emto de objetos diferentes, de maneira similar);
 - in;
 - instanceof.
-
 - executar no terminal do vscode: node ./nomearquivo.extensao
