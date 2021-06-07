@@ -1,5 +1,4 @@
 var campoFiltro = document.querySelector("#filtrar-tabela");
-
 campoFiltro.addEventListener("input", function(){
     console.log(this.value);
     var pacientes = document.querySelectorAll(".paciente");
@@ -9,6 +8,7 @@ campoFiltro.addEventListener("input", function(){
             var paciente = pacientes[i];
             var tdNome = paciente.querySelector(".info-nome");
             var nome = tdNome.textContent;
+            console.log(nome);
             var expressao = new RegExp(this.value, "i");
             if (!expressao.test(nome)){// testa se o valor atribuido a expressao é diferente da contida na variável nome
                 paciente.classList.add("invisivel");
