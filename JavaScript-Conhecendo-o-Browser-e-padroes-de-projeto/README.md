@@ -11,3 +11,4 @@
 - .join;
 - .reduce;
 - .bind;
+- .update;
